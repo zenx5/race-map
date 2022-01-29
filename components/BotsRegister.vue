@@ -12,6 +12,7 @@
                 item-text="name"
                 :headers="headers"
                 hide-default-footer
+                style="text-align:center;"
             ></v-data-table>
 
         </v-card-content>
@@ -46,7 +47,8 @@ module.exports = {
     data(){
         return {
             headers: [
-                { value: "name", text: "Nombre" },
+                { value: "name", text: "Nombre"},
+                { value: "distance", text: "Distancia"},
                 { value: "moves", text: "Energia" },
                 { value: "action", text: "Accion" }
             ],

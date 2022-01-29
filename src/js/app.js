@@ -23,7 +23,12 @@
                     lng:0
                 },
                 markers: [
-                    
+                    {
+                        position: {
+                            lat:0, 
+                            lng:0   
+                        }
+                    }
                 ]
             }
         },
@@ -35,12 +40,14 @@
                     console.log(position)
                     this.center.lat = position.coords.latitude
                     this.center.lng = position.coords.longitude
-                    this.markers.push( {
+                    this.markers[0].position.lat = this.center.lat;
+                    this.markers[0].position.lng = this.center.lng;
+                    /*this.markers.push( {
                         position:{
                             lat: this.center.lat,
                             lng: this.center.lng
                         }
-                    } )
+                    } )*/
                 })
             } else {
                 console.log("no geolocation")

@@ -22,7 +22,7 @@
             </v-col>
         </v-row>
         <v-row>
-            <v-col>
+            <v-col cols="8">
                 <map-board
                     :width="700"
                     :height="500"
@@ -33,7 +33,29 @@
             </v-col>
             <v-col>
                 <bots-register
-                    :height="500"></bots-register>
+                    :height="500"
+                    
+                ></bots-register>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <v-text-field
+                    label="Latitude"
+                    type="Number"
+                    v-model="markers[0].position.lat"
+                    step="0.000001"
+                >
+                </v-text-field>
+            </v-col>
+            <v-col>
+                <v-text-field
+                    label="Longitude"
+                    type="Number"
+                    v-model="markers[0].position.lng"
+                    step="0.000001"
+                >
+                </v-text-field>
             </v-col>
         </v-row>
         
