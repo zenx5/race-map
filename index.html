@@ -18,7 +18,7 @@
     <div id="app">
         <v-row>
             <v-col>
-                {{name}} - {{version}}
+                {{ name }} - {{ version }}
             </v-col>
         </v-row>
         <v-row>
@@ -28,36 +28,18 @@
                     :height="500"
                     :center="center"
                     :zoom="15"
-                    :markers="markers"
+                    :markers="bots"
                 ></map-board>
             </v-col>
             <v-col>
                 <bots-register
                     :height="500"
-                    
+                    :center="center"
+                    :bots="bots"
                 ></bots-register>
             </v-col>
         </v-row>
-        <v-row>
-            <v-col>
-                <v-text-field
-                    label="Latitude"
-                    type="Number"
-                    v-model="markers[0].position.lat"
-                    step="0.000001"
-                >
-                </v-text-field>
-            </v-col>
-            <v-col>
-                <v-text-field
-                    label="Longitude"
-                    type="Number"
-                    v-model="markers[0].position.lng"
-                    step="0.000001"
-                >
-                </v-text-field>
-            </v-col>
-        </v-row>
+        
         
     </div>
     <script src="src/js/app.js"></script>

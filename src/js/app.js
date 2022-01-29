@@ -22,6 +22,11 @@
                     lat:0, 
                     lng:0
                 },
+                position: {
+                    lat: 10.5004352,
+                    lng: -66.9511459
+                },
+                bots: [],
                 markers: [
                     {
                         position: {
