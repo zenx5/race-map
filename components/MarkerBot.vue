@@ -34,26 +34,24 @@ module.exports = {
     },
     methods:{
         update( ) {
-            let energy_required = this.getRandomInteger( 10, 30 );
+            let energy_required = getRandomInteger( 10, 30 );
             if( energy_required > this.energy ){
                 this.energy -= energy;
-                this.move( this.getRandomInteger( 1, 5 ) );
+                this.move( getRandomInteger( 1, 5 ) );
             }
             else {
                 this.chargeEnergy( );
             }
         },
         move( distance ){
-            let { metaLat, metaLng } = this.meta;
-            let { lat, lng } = this.position;
             let x = this.position.lng;
             let y = this.position.lat;
             let x1 = this.meta.lng;
             let y1 = this.meta.lat;
-            let angle = Math.atan2( metaLat-lat, metaLng-lng );
+            let angle = Math.atan2( y1-y, x1-x );
             this.position.lat += distance*Math.sin(angle);
             this.position.lng += distance*Math.cos(angle);
-            if ( this.distanceBetweenPoints( {x,y}, {x1,y1} ) ) {
+            if ( distanceBetweenPoints( {x,y}, {x1,y1} ) ) {
 
             }
         },
@@ -62,9 +60,6 @@ module.exports = {
             setTimeout( _ => {
                 this.interval = initMove( );
             }, 6000 );
-        },
-        getRandomInteger( min, max ) {
-        	return Math.round( Math.random( )*( max - min ) + min );
         },
         initMove( ) {
             this.interval = setInterval( _ => {
@@ -76,9 +71,6 @@ module.exports = {
         },
         win( ) {
 
-        },
-        distanceBetweenPoints( {x1,y1}, {x2,y2} ) {
-            return Math.sqrt( (x2-x1)**2 + (y2-y1)**2 );
         }
         
     }
