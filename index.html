@@ -16,15 +16,27 @@
 </head>
 <body>
     <div id="app">
-        {{name}} - {{version}}<br>
-        {{center}}
-        <map-board
-            :width="700"
-            :height="500"
-            :center="center"
-            :zoom="12"
-            :markers="markers"
-        ></map-board>
+        <v-row>
+            <v-col>
+                {{name}} - {{version}}
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col>
+                <map-board
+                    :width="700"
+                    :height="500"
+                    :center="center"
+                    :zoom="15"
+                    :markers="markers"
+                ></map-board>
+            </v-col>
+            <v-col>
+                <bots-register
+                    :height="500"></bots-register>
+            </v-col>
+        </v-row>
+        
     </div>
     <script src="src/js/app.js"></script>
 </body>

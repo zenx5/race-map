@@ -1,10 +1,13 @@
 <template>
     <gmap-map
+        ref="ref"
         :center="center"
         :zoom="zoom"
         map-type-id="terrain"
         :style="'width: '+width+'px; height: '+height+'px'"
+        @click="click()"
         >
+        
         <gmap-marker
             :key="index"
             v-for="(m, index) in markers"
@@ -42,6 +45,22 @@ module.exports = {
         markers: {
             type: Array,
             require: true
+        }
+    },
+    data(){
+        return {
+            
+        }
+    },
+    created() {
+        
+    },
+    methods:{
+        click() {
+            let map = this.$refs.ref;
+            console.log(map)
+            //console.log(map.finalLat,map.finalLng)
+            //console.log(this.center.lat, this.center.lng)
         }
     }
 }

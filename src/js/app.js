@@ -1,16 +1,18 @@
 (function(){
-    Vue.use(VueGoogleMaps,{
+    let MAPS = Vue.use(VueGoogleMaps,{
         load:{
             key: 'AIzaSyCzsAdLpGYkTujvr_cT1wlOQqEfrrwF2Pw',
             libraries: 'places'
         }
     });
+    console.log(MAPS)
     new Vue({
         el: "#app",
         vuetify: new Vuetify(),
         components: {
           //'location': window.httpVueLoader('./components/Location.vue'),
-          'map-board': window.httpVueLoader('./components/MapBoard.vue')
+          'map-board': window.httpVueLoader('./components/MapBoard.vue'),
+          'bots-register': window.httpVueLoader('./components/BotsRegister.vue')
         },
         data(){
             return {
@@ -26,6 +28,7 @@
             }
         },
         created(){
+            console.log(MAPS)
             if ("geolocation" in navigator) {
                 console.log("geolocation")
                 navigator.geolocation.getCurrentPosition( position => {
