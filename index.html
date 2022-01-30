@@ -28,6 +28,7 @@
                     :width="700"
                     :height="500"
                     :center="center"
+                    :meta="meta"
                     :zoom="7"
                     :markers="bots"
                 ></map-board>
@@ -40,7 +41,26 @@
                 ></bots-register>
             </v-col>
         </v-row>
-        
+        <v-row>
+            <v-col>
+                <v-text-field
+                    label="Latitude"
+                    type="Number"
+                    v-model="meta.lat"
+                    step="0.001"
+                >
+                </v-text-field>
+            </v-col>
+            <v-col>
+                <v-text-field
+                    label="Longitude"
+                    type="Number"
+                    v-model="meta.lng"
+                    step="0.001"
+                >
+                </v-text-field>
+            </v-col>
+        </v-row>
         
         
     </div>

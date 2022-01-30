@@ -19,6 +19,10 @@
             return {
                 name: "Race Map",
                 version: "1.0.0",
+                meta:{
+                    lat:0, 
+                    lng:0
+                },
                 center: {
                     lat:0, 
                     lng:0
@@ -46,14 +50,8 @@
                     console.log(position)
                     this.center.lat = position.coords.latitude
                     this.center.lng = position.coords.longitude
-                    this.markers[0].position.lat = this.center.lat;
-                    this.markers[0].position.lng = this.center.lng;
-                    /*this.markers.push( {
-                        position:{
-                            lat: this.center.lat,
-                            lng: this.center.lng
-                        }
-                    } )*/
+                    this.meta.lat = position.coords.latitude
+                    this.meta.lng = position.coords.longitude
                 })
             } else {
                 console.log("no geolocation")

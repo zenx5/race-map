@@ -11,7 +11,7 @@
                 >
                 
                 <gmap-marker
-                    :position="center"
+                    :position="meta"
                     :clickable="true"
                     :draggable="true"
                     @click="e=>console.log(e)"
@@ -30,11 +30,11 @@
                     v-for="(bot, ind) in markers"
                     :energy="bot.energy"
                     :position="bot.position"
-                    :meta="center"
+                    :meta="meta"
                     ></marker-bot>
             </gmap-map>
         </v-row>
-        <v-row>
+        <!--v-row>
             <v-col>
                 <v-text-field
                     label="Latitude"
@@ -53,7 +53,7 @@
                 >
                 </v-text-field>
             </v-col>
-        </v-row>
+        </v-row-->
     </span>
   
 </template>
@@ -77,6 +77,10 @@ module.exports = {
             default: 7
         },
         center: {
+            type: Object,
+            require:true
+        },
+        meta: {
             type: Object,
             require:true
         },
