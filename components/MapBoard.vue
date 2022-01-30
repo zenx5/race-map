@@ -17,14 +17,21 @@
                     @click="e=>console.log(e)"
                 />
 
-                <gmap-marker
+                <!--gmap-marker
                     :key="index"
                     v-for="(m, index) in markers"
                     :position="m.position"
                     :clickable="true"
                     :draggable="true"
                     @click="center=m.position"
-                />
+                /-->
+                <marker-bot
+                    :key="ind"
+                    v-for="(bot, ind) in markers"
+                    :energy="bot.energy"
+                    :position="bot.position"
+                    :meta="center"
+                    ></marker-bot>
             </gmap-map>
         </v-row>
         <v-row>
@@ -78,12 +85,15 @@ module.exports = {
             require: true
         }
     },
+    components:{
+        'marker-bot': window.httpVueLoader('./components/MarkerBot.vue')
+    },
     data(){
         return {
             position: {
                 lat: 10.5004352,
                 lng: -66.9511459
-            },
+            }
         }
     },
     created() {

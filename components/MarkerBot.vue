@@ -1,5 +1,10 @@
 <template>
-    
+    <gmap-marker
+        :position="position"
+        :clickable="true"
+        :draggable="false"
+        @click="e=>console.log(e)"
+    />
 </template>
 
 <script>
@@ -7,7 +12,7 @@ module.exports = {
     props: {
         energy:{
             type:Number,
-            require: true,
+            require: false,
             default: 0
         },
         meta: {
@@ -28,14 +33,14 @@ module.exports = {
         this.initMove( );
     },
     destroyed( ) {
-        this.stopMove( );
+        
     },
     methods:{
         update( ) {
             let energy_required = getRandomInteger( 10, 30 );
-            if( energy_required > this.energy ){
-                this.energy -= energy;
-                this.move( getRandomInteger( 1, 5 ) );
+            if( energy_required < this.energy ){
+                this.energy -= energy_required;
+                this.move( getRandomInteger( 1, 5 )/100 );
             }
             else {
                 this.chargeEnergy( );
@@ -49,6 +54,7 @@ module.exports = {
             let angle = Math.atan2( y1-y, x1-x );
             this.position.lat += distance*Math.sin(angle);
             this.position.lng += distance*Math.cos(angle);
+            
             if ( distanceBetweenPoints( {x,y}, {x1,y1} ) ) {
 
             }
@@ -56,7 +62,8 @@ module.exports = {
         chargeEnergy( ) {
             this.stopMove( ) ;
             setTimeout( _ => {
-                this.interval = initMove( );
+                this.energy = 100
+                this.interval = this.initMove( );
             }, 6000 );
         },
         initMove( ) {

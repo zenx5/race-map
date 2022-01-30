@@ -12,7 +12,8 @@
         components: {
           //'location': window.httpVueLoader('./components/Location.vue'),
           'map-board': window.httpVueLoader('./components/MapBoard.vue'),
-          'bots-register': window.httpVueLoader('./components/BotsRegister.vue')
+          'bots-register': window.httpVueLoader('./components/BotsRegister.vue'),
+          'marker-bot': window.httpVueLoader('./components/MarkerBot.vue')
         },
         data(){
             return {
