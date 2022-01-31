@@ -16,44 +16,38 @@
                     :draggable="true"
                     @click="e=>console.log(e)"
                 />
-
-                <!--gmap-marker
-                    :key="index"
-                    v-for="(m, index) in markers"
-                    :position="m.position"
+                <!-- 
+                    zoom: 15 / width: 700 / height: 500
+                    lng:
+                        -0.015 => +0.015 :: 0.030
+                    lat:
+                        -0.0105 => +0.0105 :: 0.0210
+                    div: 
+                        20,000
+                    
+                    zoom: 7 / width: 700 / height: 500
+                    lng:
+                        -3.85 => +3.85 :: 7.70
+                    lat:
+                        -2.75 => +2.75 :: 5.50
+                    div
+                        100
+                    
+                    --->
+                <!-- <gmap-marker
+                    :position="{lat: meta.lat + 2.75, lng: meta.lng - 0.0 }"
                     :clickable="true"
                     :draggable="true"
-                    @click="center=m.position"
-                /-->
+                    @click="e=>console.log(e)"
+                /> -->
                 <marker-bot
                     :key="ind"
                     v-for="(bot, ind) in markers"
-                    :energy="bot.energy"
-                    :position="bot.position"
+                    :bot="bot"
                     :meta="meta"
                     ></marker-bot>
             </gmap-map>
         </v-row>
-        <!--v-row>
-            <v-col>
-                <v-text-field
-                    label="Latitude"
-                    type="Number"
-                    v-model="position.lat"
-                    step="0.000001"
-                >
-                </v-text-field>
-            </v-col>
-            <v-col>
-                <v-text-field
-                    label="Longitude"
-                    type="Number"
-                    v-model="position.lng"
-                    step="0.000001"
-                >
-                </v-text-field>
-            </v-col>
-        </v-row-->
     </span>
   
 </template>
@@ -106,7 +100,7 @@ module.exports = {
     methods:{
         click() {
             let map = this.$refs.ref;
-            console.log(map)
+            console.log(smap)
             //console.log(map.finalLat,map.finalLng)
             //console.log(this.center.lat, this.center.lng)
         }
