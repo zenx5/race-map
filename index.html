@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="src/css/materialdesignicons.min.css" rel="stylesheet"/>
+    <!--link href="src/css/materialdesignicons.min.css" rel="stylesheet"/-->
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
     <link href="src/css/vuetify.min.css" rel="stylesheet"/>
     <script src="src/js/utils.js"></script>
     <script src="src/js/httpVueLoader.js"></script>
@@ -17,52 +18,41 @@
 </head>
 <body>
     <div id="app">
-        <v-row>
-            <v-col>
-                {{ name }} - {{ version }}
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col cols="8">
-                <map-board
-                    :width="700"
-                    :height="500"
-                    :center="center"
-                    :meta="meta"
-                    :zoom="7"
-                    :markers="bots"
-                ></map-board>
-            </v-col>
-            <v-col>
-                <bots-register
-                    :height="500"
-                    :center="center"
-                    :bots="bots"
-                ></bots-register>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col>
-                <v-text-field
-                    label="Latitude"
-                    type="Number"
-                    v-model="meta.lat"
-                    step="0.001"
-                >
-                </v-text-field>
-            </v-col>
-            <v-col>
-                <v-text-field
-                    label="Longitude"
-                    type="Number"
-                    v-model="meta.lng"
-                    step="0.001"
-                >
-                </v-text-field>
-            </v-col>
-        </v-row>
-        
-        
+        <v-card>
+            <v-card-title>
+                <v-row>
+                    <v-icon 
+                        large
+                        color="green darken-2">mdi-domain</v-icon>
+                    <v-col>
+                        <v-icon large color="blue">mdi-walk</v-icon>{{ name }} - {{ version }}
+                    </v-col>
+                </v-row>
+            </v-card-title>
+            <v-card-text>
+                <v-row>
+                    <v-col cols="8">
+                        <map-board
+                            :width="700"
+                            :height="500"
+                            :center="center"
+                            :meta="meta"
+                            :zoom="10"
+                            :markers="bots"
+                        ></map-board>
+                    </v-col>
+                    <v-col>
+                        <bots-register
+                            :height="500"
+                            :center="center"
+                            :bots="bots"
+                            @deletebot="deletebot"
+                        ></bots-register>
+                    </v-col>
+                </v-row>
+            </v-card-text>
+            
+        </v-card>
     </div>
     <script src="src/js/app.js"></script>
 </body>

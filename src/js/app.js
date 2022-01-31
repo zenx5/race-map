@@ -60,6 +60,9 @@
         methods:{
             async getData(){
 
+            },
+            deletebot(name) {
+                this.bots = this.bots.filter( bot => bot.name != name )
             }
         }
         

@@ -1,6 +1,7 @@
 <template>
     <v-card
         :height="height"
+        color="primary"
         
     >
         <v-card-title>
@@ -13,11 +14,51 @@
                 :headers="headers"
                 hide-default-footer
                 style="text-align:center;"
-            ></v-data-table>
-
+                :sort-by="['styleNum','name']">
+                <template #item.name="{ item }">
+                    <span :class="item.style">{{ item.name }}</span>
+                </template>
+                <template #item.position="{ item }">
+                    <table>
+                        <tr>
+                            <th> Lat: </th>
+                            <td> {{ item.position.lat | precition(5) }} </td>
+                        </tr>
+                        <tr>
+                            <th> Lng: </th>
+                            <td> {{ item.position.lng | precition(5) }} </td>
+                        </tr>
+                    </table>
+                </template>
+                <template #item.distance="{ item }">
+                    {{ item.distance | decimal(2) }}
+                </template>
+                <template #item.energy="{ item }">
+                    <span v-if="item.style=='charging'">
+                        <small style="font-size:50%;">Charging...</small>
+                        <v-progress-linear
+                            indeterminate
+                            height="4"  
+                            rounded
+                            color="#050"
+                        ></v-progress-linear>
+                    </span>
+                    <span v-else>
+                        {{ item.energy }}
+                    </span>
+                </template>
+                <template #item.action="{item}">
+                    <v-icon @click="deletebot(item.name)">mdi-delete</v-icon>
+                </template>
+            </v-data-table>
+            
         </v-card-content>
         <v-card-actions>
-
+            <text-field-action
+                label="Nombre Bot"
+                icon="mdi-plus"
+                @click="value=>{createBot(value)}"
+            ></text-field-action>
         </v-card-actions>
     </v-card>
 </template>
@@ -37,6 +78,17 @@ module.exports = {
             type:Object,
             require: true
         }
+    },
+    components:{
+        'text-field-action' : window.httpVueLoader('./components/TextFieldAction.vue'),
+    },
+    filters: {
+        precition: (value, fix)=>{
+            return parseFloat( value.toPrecision(fix) );
+        },
+        decimal: (value, fix)=>{
+            return parseFloat( value.toFixed(fix) ); return;
+        }        
     },
     computed: {
         latMax: {
@@ -63,12 +115,14 @@ module.exports = {
     },
     data(){
         return {
-            lat: 0.000000000005,
-            lng: 0.000000000005,
+            name: "",
+            lat: 0.00000000000000005,
+            lng: 0.00000000000000005,
             headers: [
                 { value: "name", text: "Nombre"},
+                { value: "position", text: "Posicion"},
                 { value: "distance", text: "Distancia"},
-                { value: "moves", text: "Energia" },
+                { value: "energy", text: "Energia" },
                 { value: "action", text: "Accion" }
             ]
         }
@@ -77,21 +131,49 @@ module.exports = {
         console.log( this.center )
         const countBots = Math.floor(Math.random() * ((10+1)-5)+5);
         for(let i = 0; i < countBots; i++ ) {
+            this.name = "Bot "+(i+1);
+            this.createBot()
+        }
+        this.name = ""
+        console.log( this.bots )
+    },
+    methods: {
+        createBot(name){
+            if(name == undefined) name = this.name;
             this.bots.push({
-                name: "Bot "+(i+1),
+                name: name,
+                style: 'active',
+                styleNum: 1,
                 energy: 100,
+                distance: Infinity,
                 position: {
                     lat: Math.random()*( (this.latMax + 1) - this.latMin  ) + this.latMax,
                     lng: Math.random()*( (this.lngMax + 1) - this.lngMin  ) + this.lngMax
                 }
                 
             })
+            this.name = ""
+        },
+        deletebot(name) {
+            this.$emit('deletebot',name);
         }
-        console.log( this.bots )
     }
 }
 </script>
 
-<style>
+<style scoped>
+    .completed {
+        color: green;
+        text-shadow: 1px 1px 2px black;
+    }
+    .active {
+        color: greenyellow;
+        text-shadow: 1px 1px 2px black;
+    }
+    .charging{
+        color: orangered;
+        text-shadow: 1px 1px 2px black;
+    }
+
 
 </style>
