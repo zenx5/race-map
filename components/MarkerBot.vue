@@ -3,7 +3,6 @@
         :position="position"
         :clickable="true"
         :draggable="false"
-        @click="e=>console.log(e)"
     />
 </template>
 
@@ -12,7 +11,7 @@ module.exports = {
     props: {
         energy:{
             type:Number,
-            require: false,
+            require: true,
             default: 0
         },
         meta: {
@@ -33,37 +32,36 @@ module.exports = {
         this.initMove( );
     },
     destroyed( ) {
-        
+        this.stopMove( );
     },
     methods:{
         update( ) {
             let energy_required = getRandomInteger( 10, 30 );
             if( energy_required < this.energy ){
                 this.energy -= energy_required;
-                this.move( getRandomInteger( 1, 5 )/100 );
+                this.move( getRandomInteger( 1, 5 ) );
             }
             else {
                 this.chargeEnergy( );
             }
         },
         move( distance ){
-            let x = this.position.lng;
-            let y = this.position.lat;
-            let x1 = this.meta.lng;
-            let y1 = this.meta.lat;
-            let angle = Math.atan2( y1-y, x1-x );
+            let x1 = this.position.lng;
+            let y1 = this.position.lat;
+            let x2 = this.meta.lng;
+            let y2 = this.meta.lat;
+            let angle = Math.atan2( y2-y1, x2-x1 );
             this.position.lat += distance*Math.sin(angle);
             this.position.lng += distance*Math.cos(angle);
-            
-            if ( distanceBetweenPoints( {x,y}, {x1,y1} ) ) {
+            if ( distanceBetweenPoints( {x1,y1}, {x2,y2} ) ) {
 
             }
         },
         chargeEnergy( ) {
             this.stopMove( ) ;
             setTimeout( _ => {
-                this.energy = 100
-                this.interval = this.initMove( );
+                this.energy = 100;
+                this.interval = initMove( );
             }, 6000 );
         },
         initMove( ) {
