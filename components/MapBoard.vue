@@ -13,7 +13,7 @@
                 <gmap-marker
                     ref="meta"
                     :position="meta2"
-                    icon="src/img/meta2.png"
+                    icon="src/img/meta.png"
                     :clickable="false"
                     :draggable="false"
                     

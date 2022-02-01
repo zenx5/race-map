@@ -2,7 +2,7 @@
     
     <gmap-marker
         :position="bot.position"
-        icon="src/img/bot1.png"
+        icon="src/img/bot.png"
         :clickable="true"
         :draggable="false"
     >
