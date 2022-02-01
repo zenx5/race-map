@@ -7,39 +7,18 @@
                 :zoom="zoom"
                 map-type-id="terrain"
                 :style="'width: '+width+'px; height: '+height+'px'"
-                @click="click()"
+                @click="click"
                 >
                 
                 <gmap-marker
-                    :position="meta"
-                    :clickable="true"
-                    :draggable="true"
-                    @click="e=>console.log(e)"
+                    ref="meta"
+                    :position="meta2"
+                    icon="src/img/meta2.png"
+                    :clickable="false"
+                    :draggable="false"
+                    
                 />
-                <!-- 
-                    zoom: 15 / width: 700 / height: 500
-                    lng:
-                        -0.015 => +0.015 :: 0.030
-                    lat:
-                        -0.0105 => +0.0105 :: 0.0210
-                    div: 
-                        20,000
-                    
-                    zoom: 7 / width: 700 / height: 500
-                    lng:
-                        -3.85 => +3.85 :: 7.70
-                    lat:
-                        -2.75 => +2.75 :: 5.50
-                    div
-                        100
-                    
-                    --->
-                <!-- <gmap-marker
-                    :position="{lat: meta.lat + 2.75, lng: meta.lng - 0.0 }"
-                    :clickable="true"
-                    :draggable="true"
-                    @click="e=>console.log(e)"
-                /> -->
+                
                 <marker-bot
                     :key="ind"
                     v-for="(bot, ind) in markers"
@@ -91,18 +70,21 @@ module.exports = {
             position: {
                 lat: 10.5004352,
                 lng: -66.9511459
-            }
+            },
+            meta2: {
+                lat: 0,
+                lng: 0
+            },
         }
     },
     created() {
-        
+        this.meta2 = this.meta
     },
     methods:{
-        click() {
-            let map = this.$refs.ref;
-            console.log(smap)
-            //console.log(map.finalLat,map.finalLng)
-            //console.log(this.center.lat, this.center.lng)
+        click(ev) {
+            this.meta2.lat = ev.latLng.lat();
+            this.meta2.lng = ev.latLng.lng();
+            //this.$emit('changemeta', ev )
         }
     }
 }

@@ -63,6 +63,12 @@
             },
             deletebot(name) {
                 this.bots = this.bots.filter( bot => bot.name != name )
+            },
+            changemeta(ev) {
+                console.log( this.meta )
+                console.log( ev.latLng )
+                this.meta.lat = ev.latLng.lat
+                this.meta.lng = ev.latLng.lng
             }
         }
         

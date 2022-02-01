@@ -1,9 +1,12 @@
 <template>
+    
     <gmap-marker
         :position="bot.position"
+        icon="src/img/bot1.png"
         :clickable="true"
         :draggable="false"
-    />
+    >
+    </gmap-marker>
 </template>
 
 <script>
@@ -26,13 +29,19 @@ module.exports = {
         }
     },
     created(){
-        console.log("meta",this.meta)
+        console.log("meta",this, this.setIcon)
         this.initMove( );
     },
     destroyed( ) {
         this.stopMove( );
     },
     methods:{
+        /**
+         * styleNum => style
+         * 0 => completed
+         * 1 => active
+         * 2 => charging
+         */
         update( ) {
             // console.log("update")
             if( this.bot.distance <= 0.05 ){ 
@@ -47,7 +56,7 @@ module.exports = {
             }
             else{
                 this.bot.style = "charging";
-                this.bot.styleNum = 3
+                this.bot.styleNum = 2
                 this.chargeEnergy( );
             }
         },
@@ -74,7 +83,7 @@ module.exports = {
             let x1 = this.meta.lng;
             let y1 = this.meta.lat;
             let angle = Math.atan2( y1-y, x1-x );
-            this.bot.position.lat += xG*0.000318*Math.sin(angle);
+            this.bot.position.lat += xG*0.000318*Math.sin(angle);  //0.000318 equivale a 50mts
             this.bot.position.lng += xG*0.000318*Math.cos(angle);
             this.bot.distance = this.getDistance(x,y,x1,y1,'M');
             if ( distanceBetweenPoints( {x,y}, {x1,y1} ) ) {
