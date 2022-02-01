@@ -51,8 +51,17 @@ class Bot {
     }
     
     update( ) {
+        this.distance = this.getDistance( this.position.lng,  this.position.lat,  this.position.lng,  this.position.lat,'M');
         switch(this.style){
-            case 'completed': return;
+            case 'completed': 
+                if( this.distance <= 20 ){ 
+                    this.style = "completed";
+                    this.styleNum = 0
+                    return;
+                }     
+                this.style = "active";
+                this.styleNum = 1
+                break;
             case 'active':
                 if( this.distance <= 20 ){ 
                     this.style = "completed";
