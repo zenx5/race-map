@@ -35,7 +35,7 @@ module.exports = {
     methods:{
         update( ) {
             // console.log("update")
-            if( this.bot.distance <= 0.01 ){ 
+            if( this.bot.distance <= 0.05 ){ 
                 this.bot.style = "completed";
                 this.bot.styleNum = 0
                 return;
@@ -43,7 +43,7 @@ module.exports = {
             let energy_required = getRandomInteger( 10, 30 );
             if( energy_required < this.bot.energy ){
                 this.bot.energy -= energy_required;
-                this.move( getRandomInteger( 1, 5 )/100 );
+                this.move( getRandomReal( 1, 2 ) );
             }
             else{
                 this.bot.style = "charging";
@@ -60,21 +60,23 @@ module.exports = {
             let miles = dist * 60 * 1.1515;            
             if (unit.toUpperCase() == "K") {
                 return (miles * 1.609344);//+' km';
+            } else if (unit.toUpperCase() == "M") {
+                return (miles * 1609.344);//+' m';
             } else if (unit.toUpperCase() == "N") {
                 return (miles * 0.8684);//+' nm';
             } else {
                 return miles; //+' mi';
             }
         },
-        move( distance ){
+        move( xG ){
             let x = this.bot.position.lng;
             let y = this.bot.position.lat;
             let x1 = this.meta.lng;
             let y1 = this.meta.lat;
             let angle = Math.atan2( y1-y, x1-x );
-            this.bot.position.lat += distance*Math.sin(angle);
-            this.bot.position.lng += distance*Math.cos(angle);
-            this.bot.distance = this.getDistance(x,y,x1,y1,'K');
+            this.bot.position.lat += xG*0.000318*Math.sin(angle);
+            this.bot.position.lng += xG*0.000318*Math.cos(angle);
+            this.bot.distance = this.getDistance(x,y,x1,y1,'M');
             if ( distanceBetweenPoints( {x,y}, {x1,y1} ) ) {
 
             }

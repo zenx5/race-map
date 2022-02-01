@@ -115,8 +115,8 @@ module.exports = {
     data(){
         return {
             name: "",
-            lat: 0.5,
-            lng: 0.5,
+            lat: 0.01,
+            lng: 0.01,
             headers: [
                 { value: "name", text: "Nombre"},
                 { value: "position", text: "Posicion"},
