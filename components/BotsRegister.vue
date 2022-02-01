@@ -77,6 +77,10 @@ module.exports = {
         bots:{
             type:Object,
             require: true
+        },
+        meta:{
+            type:Object,
+            require: true
         }
     },
     components:{
@@ -114,6 +118,8 @@ module.exports = {
     },
     data(){
         return {
+            first: 0,
+            last: 0,
             name: "",
             lat: 0.01,
             lng: 0.01,
@@ -135,22 +141,48 @@ module.exports = {
         }
         this.name = ""
         console.log( this.bots )
+        setInterval( _ => {
+            let min = Infinity, max = 0;
+            this.bots.forEach( (bot,ind) => {
+                if( bot.distance > max ) {
+                    max = bot.distance;
+                    this.last = ind;
+                }
+                if( bot.distance < min ) {
+                    min = bot.distance;
+                    this.first = ind;
+                }
+                bot.setIcon();
+            })
+            this.bots[ this.first ].setIcon('first')
+            this.bots[ this.last ].setIcon('last')
+            this.bots.forEach( (bot) => {
+                bot.setMeta( this.meta.lat, this.meta.lng )
+                bot.update();        
+            })
+        }, 1000)
     },
     methods: {
         createBot(name){
             if(name == undefined) name = this.name;
-            this.bots.push({
-                name: name,
-                style: 'active',
-                styleNum: 1,
+            this.bots.push( new Bot(name, {
                 energy: 100,
-                distance: Infinity,
-                position: {
-                    lat: getRandomReal( this.latMin, this.latMax ),
-                    lng: getRandomReal( this.lngMin, this.lngMax)
-                }
-                
-            })
+                latMin: this.latMin,
+                latMax: this.latMax,
+                lngMin: this.lngMin,
+                lngMax: this.lngMax
+            }) );
+            // this.bots.push({
+            //     name: name,
+            //     style: 'active',
+            //     styleNum: 1,
+            //     energy: 100,
+            //     distance: Infinity,
+            //     position: {
+            //         lat: getRandomReal( this.latMin, this.latMax ),
+            //         lng: getRandomReal( this.lngMin, this.lngMax)
+            //     }
+            // })
             this.name = ""
         },
         deletebot(name) {

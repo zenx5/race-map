@@ -8,24 +8,23 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@mdi/font@6.5.95/css/materialdesignicons.min.css">
     <link href="src/css/vuetify.min.css" rel="stylesheet"/>
     <script src="src/js/utils.js"></script>
+    <script src="src/js/bot.js"></script>
     <script src="src/js/httpVueLoader.js"></script>
     <script src="src/js/axios.min.js"></script>
     <script src="src/js/vue@2.6.14.js"></script>
     <script src="src/js/vuetify.js"></script>
     <script src="src/js/vue-google-maps.js" ></script>
 
-    <title>Document</title>
+    <title>Race Map</title>
 </head>
 <body>
     <div id="app">
         <v-card>
             <v-card-title>
                 <v-row>
-                    <v-icon 
-                        large
-                        color="green darken-2">mdi-domain</v-icon>
-                    <v-col>
-                        <v-icon large color="blue">mdi-walk</v-icon>{{ name }} - {{ version }}
+                    <v-col cols="4" style="display:flex; align-items: center; justify-content: space-around;">
+                        <img src="src/img/botlast.png" />
+                        <h3>{{ name }} - {{ version }}</h3>
                     </v-col>
                 </v-row>
             </v-card-title>
@@ -47,6 +46,7 @@
                             :height="500"
                             :center="center"
                             :bots="bots"
+                            :meta="meta"
                             @deletebot="deletebot"
                         ></bots-register>
                     </v-col>

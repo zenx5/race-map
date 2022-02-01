@@ -5,7 +5,6 @@
             libraries: 'places'
         }
     });
-    console.log(MAPS)
     new Vue({
         el: "#app",
         vuetify: new Vuetify(),
@@ -43,7 +42,6 @@
             }
         },
         created(){
-            console.log(MAPS)
             if ("geolocation" in navigator) {
                 console.log("geolocation")
                 navigator.geolocation.getCurrentPosition( position => {
