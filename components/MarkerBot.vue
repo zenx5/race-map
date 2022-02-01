@@ -51,6 +51,21 @@ module.exports = {
                 this.chargeEnergy( );
             }
         },
+        getDistance(fromLng, fromLat, toLng, toLat, unit = ''){
+            //Calculate distance from latitude and longitude
+            let theta = fromLng - toLng;
+            //let dist = sin(deg2rad(latitudeFrom)) * sin(deg2rad(latitudeTo)) +  cos(deg2rad(latitudeFrom)) * cos(deg2rad(latitudeTo)) * cos(deg2rad(theta));
+            let dist = Math.sin(deg2rad(fromLat)) * Math.sin(deg2rad(toLat)) +  Math.cos(deg2rad(fromLat)) * Math.cos(deg2rad(toLat)) * Math.cos(deg2rad(theta));
+            dist = rad2deg( Math.acos(dist) );
+            let miles = dist * 60 * 1.1515;            
+            if (unit.toUpperCase() == "K") {
+                return (miles * 1.609344);//+' km';
+            } else if (unit.toUpperCase() == "N") {
+                return (miles * 0.8684);//+' nm';
+            } else {
+                return miles; //+' mi';
+            }
+        },
         move( distance ){
             let x = this.bot.position.lng;
             let y = this.bot.position.lat;
@@ -59,7 +74,7 @@ module.exports = {
             let angle = Math.atan2( y1-y, x1-x );
             this.bot.position.lat += distance*Math.sin(angle);
             this.bot.position.lng += distance*Math.cos(angle);
-            this.bot.distance = Math.pow(  Math.pow(y1 - y,2) + Math.pow(x1 - x,2) , 0.5 );
+            this.bot.distance = this.getDistance(x,y,x1,y1,'K');
             if ( distanceBetweenPoints( {x,y}, {x1,y1} ) ) {
 
             }
