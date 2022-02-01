@@ -128,7 +128,7 @@ module.exports = {
     },
     created(){
         console.log( this.center )
-        const countBots = Math.floor(Math.random() * ((10+1)-5)+5);
+        const countBots = 1//Math.floor(Math.random() * ((10+1)-5)+5);
         for(let i = 0; i < countBots; i++ ) {
             this.name = "Bot "+(i+1);
             this.createBot()

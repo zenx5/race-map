@@ -45,6 +45,7 @@
                     v-for="(bot, ind) in markers"
                     :bot="bot"
                     :meta="meta"
+                    :map="this.map"
                     ></marker-bot>
             </gmap-map>
         </v-row>
@@ -96,6 +97,13 @@ module.exports = {
     },
     created() {
         
+    },
+    computed:{
+        map:{
+            get(){
+                return this.$refs.ref;
+            }
+        }
     },
     methods:{
         click() {

@@ -2,7 +2,7 @@
     let MAPS = Vue.use(VueGoogleMaps,{
         load:{
             key: 'AIzaSyCzsAdLpGYkTujvr_cT1wlOQqEfrrwF2Pw',
-            libraries: 'places'
+            libraries: 'geometry'
         }
     });
     console.log(MAPS)

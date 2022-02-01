@@ -16,6 +16,9 @@ module.exports = {
         bot: {
             type: Object,
             require: true
+        },
+        map: {
+            type: Object
         }
     },
     data(){
@@ -26,7 +29,6 @@ module.exports = {
         }
     },
     created(){
-        console.log("meta",this.meta)
         this.initMove( );
     },
     destroyed( ) {
@@ -34,6 +36,7 @@ module.exports = {
     },
     methods:{
         update( ) {
+            this.getDistance2( this.bot.position.lat, this.bot.position.lng, this.meta.lat, this.meta.lng )
             // console.log("update")
             if( this.bot.distance <= 0.01 ){ 
                 this.bot.style = "completed";
@@ -44,12 +47,51 @@ module.exports = {
             if( energy_required < this.bot.energy ){
                 this.bot.energy -= energy_required;
                 this.move( getRandomInteger( 1, 5 )/100 );
+                // this.move( getRandomInteger( 50, 100 ) );
             }
             else{
                 this.bot.style = "charging";
                 this.bot.styleNum = 3
                 this.chargeEnergy( );
             }
+        },
+        getDistance2( latFrom, lngFrom, latTo, lngTo ) {
+            console.log( latFrom, lngFrom, latTo, lngTo )
+            let map = this.map;
+             markerA = new google.maps.Marker({
+                position: {
+                    lat: latFrom, 
+                    lng: lngFrom
+                },
+                map: map,
+                icon: {
+                    url: 'http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png'
+                },
+                title: "Marker A"
+            });
+
+            // 3. Poner segundo marcador en Bogotá
+            markerB = new google.maps.Marker({
+                position: {
+                    lat: latTo, 
+                    lng: -lngTo
+                },
+                map: map,
+                icon: {
+                    url: 'http://maps.google.com/mapfiles/kml/pushpin/red-pushpin.png'
+                },
+                title: "Marker B"
+            });
+            var distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(
+                new google.maps.LatLng({
+                    lat: latFrom, 
+                    lng: lngFrom
+                }),
+                new google.maps.LatLng({
+                    lat: latTo, 
+                    lng: lngTo
+                })
+            );
         },
         move( distance ){
             let x = this.bot.position.lng;
