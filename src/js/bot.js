@@ -40,6 +40,11 @@ class Bot {
     setMeta( lat, lng ) {
         this.meta.lat = lat; 
         this.meta.lng = lng;
+        this.distance = this.getDistance( this.position.lng,  this.position.lat,  this.meta.lng,  this.meta.lat,'M');
+        if( this.distance > 20 && this.style == "completed" ){ 
+            this.style = "active";
+            this.styleNum = 1
+        }  
     }
 
     getRandomInteger( min, max ) {
@@ -52,16 +57,7 @@ class Bot {
     
     update( ) {
         switch(this.style){
-            case 'completed': 
-                this.distance = this.getDistance( this.position.lng,  this.position.lat,  this.meta.lng,  this.meta.lat,'M');
-                if( this.distance <= 20 ){ 
-                    this.style = "completed";
-                    this.styleNum = 0
-                    return;
-                }     
-                this.style = "active";
-                this.styleNum = 1
-                break;
+            case 'completed': return;
             case 'active':
                 if( this.distance <= 20 ){ 
                     this.style = "completed";
