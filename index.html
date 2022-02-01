@@ -14,7 +14,11 @@
     <script src="src/js/vue@2.6.14.js"></script>
     <script src="src/js/vuetify.js"></script>
     <script src="src/js/vue-google-maps.js" ></script>
-
+    <style>
+        .board-center span div{
+            justify-content: center;
+        }
+    </style>
     <title>Race Map</title>
 </head>
 <body>
@@ -26,11 +30,41 @@
                         <img src="src/img/botlast.png" />
                         <h3>{{ name }} - {{ version }}</h3>
                     </v-col>
+                    <v-col style="flex-direction:row;">
+                        <v-text-field 
+                            label="Cantidad minima de bots"
+                            type="number"
+                            v-model="config.minbot"
+                            min="0"
+                            :max="config.maxbot-1"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col>
+                        <v-text-field 
+                            label="Cantidad maxima de bots"
+                            type="number"
+                            v-model="config.maxbot"
+                            :min="config.minbot+1"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col>
+                        <v-text-field 
+                            label="Tiempo de espera para cargar"
+                            type="number"
+                            v-model="config.limit"
+                        ></v-text-field>
+                    </v-col>
+                    <v-col>
+                        <v-btn @click="guardarConfig">
+                            Guardar <v-icon>mdi-content-save</v-icon>
+                        </v-btn>
+                    </v-col>
                 </v-row>
             </v-card-title>
+            <v-divider></v-divider>
             <v-card-text>
                 <v-row>
-                    <v-col cols="8">
+                    <v-col cols="8"  class="board-center">
                         <map-board
                             :width="700"
                             :height="500"

@@ -18,6 +18,11 @@
             return {
                 name: "Race Map",
                 version: "1.0.0",
+                config: {
+                    minbot:5,
+                    maxbot:10,
+                    limit: 6
+                },
                 meta:{
                     lat:0, 
                     lng:0
@@ -42,31 +47,33 @@
             }
         },
         created(){
+            if( sessionStorage.getItem('config') == undefined) {
+                sessionStorage.setItem('config', JSON.stringify( this.config ) )
+            }else{
+                this.config = JSON.parse( sessionStorage.getItem('config') );
+            }
+
             if ("geolocation" in navigator) {
-                console.log("geolocation")
                 navigator.geolocation.getCurrentPosition( position => {
-                    console.log(position)
                     this.center.lat = position.coords.latitude
                     this.center.lng = position.coords.longitude
                     this.meta.lat = position.coords.latitude
                     this.meta.lng = position.coords.longitude
                 })
             } else {
-                console.log("no geolocation")
+                alert("Geolocation no disponible en su navegador");
             }
         },
         methods:{
-            async getData(){
-
-            },
             deletebot(name) {
                 this.bots = this.bots.filter( bot => bot.name != name )
             },
             changemeta(ev) {
-                console.log( this.meta )
-                console.log( ev.latLng )
                 this.meta.lat = ev.latLng.lat
                 this.meta.lng = ev.latLng.lng
+            },
+            guardarConfig(){
+                sessionStorage.setItem('config', JSON.stringify( this.config ) )
             }
         }
         

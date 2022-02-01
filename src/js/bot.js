@@ -13,7 +13,7 @@ class Bot {
         }
         this.icon = 'default'
         this.distance = Infinity;
-        this.countCharge = 0;
+        this.countCharge = 0
         this.energy = options.energy ?? 100;
         this.meta = {
             lat: 0,
@@ -75,7 +75,7 @@ class Bot {
                     this.style = "completed";
                     this.styleNum = 0
                     return;
-                }else if( this.countCharge == 6 ) {
+                }else if( this.countCharge == ( JSON.parse(sessionStorage.getItem('config')).limit ) ) {
                     this.style = 'active';
                     this.styleNum = 1;
                     this.energy = 100;

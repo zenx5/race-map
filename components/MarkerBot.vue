@@ -27,16 +27,6 @@ module.exports = {
             energy: 0,
             meta: {}
         }
-    },
-    created(){
-        console.log("meta",this, this.setIcon)
-        
-    },
-    destroyed( ) {
-        
-    },
-    methods:{
-        
     }
 
 }

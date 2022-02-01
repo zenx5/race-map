@@ -14,28 +14,22 @@
                 :headers="headers"
                 hide-default-footer
                 style="text-align:center;"
-                :sort-by="['styleNum','name']">
+                :sort-by="['distance']">
                 <template #item.name="{ item }">
                     <span :class="item.style">{{ item.name }}</span>
                 </template>
-                <template #item.position="{ item }">
-                    <table>
-                        <tr>
-                            <th> Lat: </th>
-                            <td> {{ item.position.lat | precition(5) }} </td>
-                        </tr>
-                        <tr>
-                            <th> Lng: </th>
-                            <td> {{ item.position.lng | precition(5) }} </td>
-                        </tr>
-                    </table>
+                <template #item.position.lat="{ item }">
+                    {{ item.position.lat | precition(5) }}
+                </template>
+                <template #item.position.lng="{ item }">
+                    {{ item.position.lng | precition(5) }}
                 </template>
                 <template #item.distance="{ item }">
                     {{ item.distance | decimal(2) }}
                 </template>
                 <template #item.energy="{ item }">
                     <span v-if="item.style=='charging'">
-                        <small style="font-size:50%;">Charging...</small>
+                        <small style="font-size:50%;">Charging in...{{ 6 - item.countCharge}}</small>
                         <v-progress-linear
                             indeterminate
                             height="4"  
@@ -125,7 +119,8 @@ module.exports = {
             lng: 0.01,
             headers: [
                 { value: "name", text: "Nombre"},
-                { value: "position", text: "Posicion"},
+                { value: "position.lat", text: "Latitud"},
+                { value: "position.lng", text: "Longitud"},
                 { value: "distance", text: "Distancia"},
                 { value: "energy", text: "Energia" },
                 { value: "action", text: "Accion" }
@@ -133,14 +128,13 @@ module.exports = {
         }
     },
     created(){
-        console.log( this.center )
         const countBots = Math.floor(Math.random() * ((10+1)-5)+5);
         for(let i = 0; i < countBots; i++ ) {
             this.name = "Bot "+(i+1);
             this.createBot()
         }
         this.name = ""
-        console.log( this.bots )
+        
         setInterval( _ => {
             let min = Infinity, max = 0;
             this.bots.forEach( (bot,ind) => {
@@ -170,19 +164,9 @@ module.exports = {
                 latMin: this.latMin,
                 latMax: this.latMax,
                 lngMin: this.lngMin,
-                lngMax: this.lngMax
+                lngMax: this.lngMax,
+                
             }) );
-            // this.bots.push({
-            //     name: name,
-            //     style: 'active',
-            //     styleNum: 1,
-            //     energy: 100,
-            //     distance: Infinity,
-            //     position: {
-            //         lat: getRandomReal( this.latMin, this.latMax ),
-            //         lng: getRandomReal( this.lngMin, this.lngMax)
-            //     }
-            // })
             this.name = ""
         },
         deletebot(name) {
