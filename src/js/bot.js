@@ -10,7 +10,7 @@ class Bot {
             first: 'src/img/botfirst.png',
             last: 'src/img/botlast.png',
             default: 'src/img/botdefault.png'
-        }
+        };
         this.icon = 'default'
         this.distance = Infinity;
         this.countCharge = 0
@@ -20,8 +20,8 @@ class Bot {
             lng: 0
         };
         this.position = {
-            lat: getRandomReal( options.latMin, options.latMax ),
-            lng: getRandomReal( options.lngMin, options.lngMax )
+            lat: this.getRandomReal( options.latMin, options.latMax ),
+            lng: this.getRandomReal( options.lngMin, options.lngMax )
         };
 
     }
@@ -51,9 +51,9 @@ class Bot {
     }
     
     update( ) {
-        this.distance = this.getDistance( this.position.lng,  this.position.lat,  this.position.lng,  this.position.lat,'M');
         switch(this.style){
             case 'completed': 
+                this.distance = this.getDistance( this.position.lng,  this.position.lat,  this.meta.lng,  this.meta.lat,'M');
                 if( this.distance <= 20 ){ 
                     this.style = "completed";
                     this.styleNum = 0
