@@ -1,7 +1,7 @@
 (function(){
     let MAPS = Vue.use(VueGoogleMaps,{
         load:{
-            key: 'AIzaSyCzsAdLpGYkTujvr_cT1wlOQqEfrrwF2Pw',
+            key: '',
             libraries: 'places'
         }
     });
